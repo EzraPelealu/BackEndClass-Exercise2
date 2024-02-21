@@ -1,39 +1,32 @@
 const express = require('express');
-const morgan = require('morgan');
-const members = require('./members');
-const users = require('./users');
+const port = 3000;
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
 
-app.use(morgan('dev'));
+// Middleware for request body using body-parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.status(200).send('This is the homepage');
+// Middleware for serving static files
+app.use(express.static('public'));
+
+// Middleware for file upload using multer
+const upload = multer({ dest: 'uploads/' });
+app.post('/upload', upload.single('file'), (req, res, next) => {
+  // handle the upload here
 });
 
-app.get('/about', (req, res) => {
-  const response = {
-    status: 'success',
-    massage: 'response success',
-    description: 'Exercise #03',
-    date: new Date().toISOString(),
-    data: members
-  };
-  res.status(210).json(response);
-});
+// Middleware for handling CORS
+app.use(cors());
 
-app.get('/users', (req, res) => {
-  const response = {
-    status: 'success',
-    massage: 'response success',
-    description: 'Exercise #03',
-    date: new Date().toISOString(),
-    data: users
-  };
-  res.status(220).json(response);
+// Define routes here
+app.get('/', (req, res, next) => {
+  res.send('Hello World! I am Ezra!');
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server berjalan pada ${port}`);
 });
