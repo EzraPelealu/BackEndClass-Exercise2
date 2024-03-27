@@ -12,7 +12,7 @@ app.use(express.json());
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-/*--------------------------*/
+/*------------------------*/
 
 app.get("/students", async (req, res) => {
   try {
