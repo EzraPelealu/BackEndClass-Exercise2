@@ -34,7 +34,7 @@ const deleteStudentById = async (id) => {
 };
 
 const editStudentById = async (id, studentData) => {
-  await getStudentsById(id);
+  await getStudentById(id);
 
   const student = await editStudent(id, studentData);
   return student;
